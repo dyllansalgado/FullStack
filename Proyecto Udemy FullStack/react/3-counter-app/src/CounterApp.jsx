@@ -1,7 +1,10 @@
-export const CounterApp = () =>{
-    let counter = 0;
+import { useState } from "react";
+
+export const CounterApp = ({value}) =>{
+    const [counter,setCounter] = useState(value);
+
     const counterIncrement = () =>{
-        counter = counter + 1;
+        setCounter(c=> c+1);
         console.log('click!');
         console.log(counter);
     }
