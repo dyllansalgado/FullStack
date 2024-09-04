@@ -10,10 +10,20 @@ export const InvoiceApp = () => {
     //Con el service se llaman los datos, pero cada vez que se renderiza se volvera a llamar.
     const {id,name,client,company,items,total} = getInvoice();
 
+
+    //Para resumir los const siguientes se puede generar uno mas general.
+
+    const [formItemsState, setFormItemsState] = useState({
+        productValue: '',
+        priceValue: '',
+        quantityValue: ''
+    });
+
+    const {productValue,priceValue,quantityValue} = formItemsState;
     //Se utilizan para obtener los estados en los inputs.
-    const [productValue, setProductValue] = useState("");
-    const [priceValue, setPriceValue] = useState(0);
-    const [quantityValue, setQuantityValue] = useState(0);
+    //const [productValue, setProductValue] = useState("");
+    //const [priceValue, setPriceValue] = useState(0);
+    //const [quantityValue, setQuantityValue] = useState(0);
 
     //Para guardar los estados se debe realizar uno para items igual. Se asigna un nuevo nombre que sera ItemsNew
     const [itemsNew, setItemsNew] = useState(items)
@@ -21,23 +31,27 @@ export const InvoiceApp = () => {
     //Contador dinamico para las id de los productos, en la data tenemos 3 valores por eso se parte de 4
     const [counter,setCounter] = useState(4);
 
-    const onProductChange =(event) =>{
-        {
-            setProductValue(event.target.value);    
-        }
-    };
+    const onInputChange = ({target: {name,value}}) =>{
+        setFormItemsState({...formItemsState, [name]:value})
+    }
+    //Estos igual se pueden resumir, de la manera anterior.
+    //const onProductChange =(event) =>{
+    //    {
+    //        setProductValue(event.target.value);    
+    //    }
+    //};
 
-    const onPriceChange = (event) =>{
-        {
-            setPriceValue(event.target.value);
-        }
-    };
+    //const onPriceChange = (event) =>{
+    //    {
+    //        setPriceValue(event.target.value);
+    //    }
+    //};
 
-    const onQuantityChange = (event) =>{
-        {
-            setQuantityValue(event.target.value);
-        }
-    };
+    //const onQuantityChange = (event) =>{
+    //    {
+    //        setQuantityValue(event.target.value);
+    //    }
+    //};
 
     const onInvoiceItemsSubmit = (event) =>{
         {
@@ -61,9 +75,11 @@ export const InvoiceApp = () => {
                 quantity: parseInt(quantityValue,10)}]);
             {/* A continuacion se llaman nuevamente los sets en vacios, para que cuando se envie un producto
             se elimine el texto del input */}
-            setProductValue("");
-            setPriceValue(0);
-            setQuantityValue(0);
+            setFormItemsState({
+                productValue: '',
+                priceValue: '',
+                quantityValue: ''
+            });
             setCounter(counter + 1);
         }
     }
@@ -89,29 +105,29 @@ export const InvoiceApp = () => {
                         }>
                             <input 
                                 type = "text"
-                                name = "product"
+                                name = "productValue"
                                 value = {productValue}
                                 placeholder="Producto" 
                                 className="form-control m-3"
-                                onChange={event => onProductChange(event)
+                                onChange={event => onInputChange(event)
                                 }/>
                             <input 
                                 type = "number"
-                                name = "price"
+                                name = "priceValue"
                                 value = {priceValue}
                                 min = "1"
                                 placeholder="Precio"
                                 className="form-control m-3"
-                                onChange={event => onPriceChange(event)
+                                onChange={event => onInputChange(event)
                                 }/>
                             <input 
                                 type = "number"
-                                name = "quantity"
+                                name = "quantityValue"
                                 value = {quantityValue}
                                 min = "1"
                                 placeholder="Cantidad"
                                 className="form-control m-3"
-                                onChange={event => onQuantityChange(event)
+                                onChange={event => onInputChange(event)
                                 }/>
                             <button 
                             type="submit" 
