@@ -1,18 +1,50 @@
-import { useState } from "react";
-import { getInvoice } from "./services/getInvoice";
+import { useEffect, useState } from "react";
+import { getInvoice, calculateTotal } from "./services/getInvoice";
 import { ClientView } from "./components/ClientView";
 import { CompanyView } from "./components/CompanyView";
 import { InvoiceView } from "./components/invoiceView";
 import { ListItemView } from "./components/ListItemView";
 import { TotalView } from "./components/TotalView";
 
+const invoiceInitial = {
+    id: 0,
+    name:'',
+    client: {
+        name: '',
+        lastName: '',
+        address: {
+            country: '',
+            city: '',
+            street: '',
+            number: 0
+        }
+    },     
+    company: {
+        name: '',
+        fiscalNumber: 0,
+    },
+    items: []
+};
+
 export const InvoiceApp = () => {
+
+
+    //Se debe crear una nueva constante para que el total se vaya actualizando dinamicamente.
+
+    const [total, setTotal] = useState(0);
+    //Contador dinamico para las id de los productos, en la data tenemos 3 valores por eso se parte de 4
+    const [counter,setCounter] = useState(4);
+    //Para que cuando se renderice no se borren los datos se debe realizar lo siguiente:
+
+    const [invoice,setInvoice] = useState(invoiceInitial);
+
+    //Para guardar los estados se debe realizar uno para items igual. Se asigna un nuevo nombre que sera ItemsNew
+    const [items, setItems] = useState([]);
     //Con el service se llaman los datos, pero cada vez que se renderiza se volvera a llamar.
-    const {id,name,client,company,items,total} = getInvoice();
+    const {id,name,client,company} = invoice;   
 
 
     //Para resumir los const siguientes se puede generar uno mas general.
-
     const [formItemsState, setFormItemsState] = useState({
         productValue: '',
         priceValue: '',
@@ -25,11 +57,16 @@ export const InvoiceApp = () => {
     //const [priceValue, setPriceValue] = useState(0);
     //const [quantityValue, setQuantityValue] = useState(0);
 
-    //Para guardar los estados se debe realizar uno para items igual. Se asigna un nuevo nombre que sera ItemsNew
-    const [itemsNew, setItemsNew] = useState(items)
+    useEffect(() =>{
+        const data = getInvoice();
+        setInvoice(data);
+        setItems(data.items);
+    }, []);
 
-    //Contador dinamico para las id de los productos, en la data tenemos 3 valores por eso se parte de 4
-    const [counter,setCounter] = useState(4);
+    useEffect(() => {
+        console.log('El precio cambio');
+        setTotal(calculateTotal(items));
+    }, [items]);
 
     const onInputChange = ({target: {name,value}}) =>{
         setFormItemsState({...formItemsState, [name]:value})
@@ -68,7 +105,7 @@ export const InvoiceApp = () => {
                 alert("La cantidad no es un número");
                 return;}
             {/* parseInt es solo para verificar que se ingresen int, transforma strings en entero */}
-            setItemsNew([...itemsNew,{
+            setItems([...items,{
                 id: counter, 
                 producto: productValue, 
                 price: parseInt(priceValue,10), 
@@ -98,7 +135,7 @@ export const InvoiceApp = () => {
                                 <CompanyView title = 'Datos de Compañia' company={company}/>
                             </div>
                         </div>
-                        <ListItemView title = 'Productos de la Factura' items = {itemsNew} total ={total}/>
+                        <ListItemView title = 'Productos de la Factura' items = {items} total ={total}/>
                         <TotalView total = {total}/>
                         <form className ="w-50" onSubmit={event => 
                             onInvoiceItemsSubmit (event)
