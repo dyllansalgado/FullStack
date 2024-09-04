@@ -20,13 +20,13 @@ export const invoice = {
             id: 1,
             producto: 'CPU Intel i9',
             price: 499,
-            quantity: 1,
+            quantity: 3,
         },
         {
             id:2,
             producto: 'Corsair Keyboard Mechanic',
             price: 150,
-            quantity: 1,
+            quantity: 2,
         },
         {
             id:3,

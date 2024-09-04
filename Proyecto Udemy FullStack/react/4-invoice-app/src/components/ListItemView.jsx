@@ -1,7 +1,7 @@
 import { RowItemView } from "./RowItemView";
 import propTypes from 'prop-types'
 
-export const ListItemView = ({title,items}) =>{
+export const ListItemView = ({title,items, total}) =>{
     return(
         <>
         <h4> {title}</h4>
@@ -13,6 +13,7 @@ export const ListItemView = ({title,items}) =>{
                     <th>Nombre del Producto</th>
                     <th>Precio del Producto</th>
                     <th>Cantidad de Productos disponibles</th>
+                    <th>Total precio y productos</th>
                 </tr>
             </thead>
             {/* tbody delimita los datos que no son el encabezado */}
@@ -22,7 +23,7 @@ export const ListItemView = ({title,items}) =>{
                 item.producto, item.price.....) */}
                 {items.map(({id,producto,price,quantity}) =>{
                     return (
-                        <RowItemView key={ id } producto = {producto} price = {price} quantity={quantity} />
+                        <RowItemView key={ id } producto = {producto} price = {price} quantity={quantity} totales ={price*quantity} />
                     );
                 })}
             </tbody>
