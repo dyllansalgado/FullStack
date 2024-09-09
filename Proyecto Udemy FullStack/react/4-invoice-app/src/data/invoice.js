@@ -1,6 +1,6 @@
 export const invoice = {
     id: 10,
-    name:'Componentes PC',
+    name: 'Componentes PC',
     client: {
         name: 'Dyllan',
         lastName: 'Salgado',
@@ -23,16 +23,16 @@ export const invoice = {
             quantity: 3,
         },
         {
-            id:2,
+            id: 2,
             producto: 'Corsair Keyboard Mechanic',
             price: 150,
             quantity: 2,
         },
         {
-            id:3,
+            id: 3,
             producto: 'Monitor Asus',
             price: 350,
             quantity: 1,
         },
     ]
-}
+};
