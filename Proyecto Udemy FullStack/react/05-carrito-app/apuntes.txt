@@ -1,0 +1,5 @@
+¿Que es reducer?
+
+Funcion sincrona que recibe dos argumentos.
+
+tiene un estado y una accion.
