@@ -1,49 +1,12 @@
-import { useState } from "react";
 import { CartView } from "./components/Cart/CartView";
 import { CatalogView } from "./components/Catalog/CatalogView";
-
-const inititalCartItems = JSON.parse(sessionStorage.getItem('cart')) || [];
+import { useItemsCart } from "./hooks/useItemsCart";
 
 export const CartApp = () => {
 
-    const [cartItems, setCartItems] = useState(inititalCartItems);
+    const { cartItems,handlerAddProductCart,handlerDeleteProductCart} = useItemsCart();
 
-    const handlerAddProductCart = (product) => {
-        const hasItem = cartItems.find((i) => i.product.id === product.id);
-        if (hasItem) {
-            // setCartItems([
-            //     ...cartItems.filter((i) => i.product.id !== product.id),
-            //     {
-            //         product,
-            //         quantity: hasItem.quantity + 1,
 
-            //     }
-            // ],)
-            setCartItems(
-                cartItems.map((i) => {
-                    if (i.product.id === product.id) {
-                        i.quantity = i.quantity + 1;
-                    }
-                    return i;
-                })
-            )
-
-        } else {
-            setCartItems([
-                ...cartItems,
-                {
-                    product,
-                    quantity: 1,
-                    total: product.price * 1
-                }
-            ]);
-        }
-    }
-    const handlerDeleteProductCart = (id) => {
-        setCartItems([
-            ...cartItems.filter((i) => i.product.id !== id)
-        ]);
-    };
     return (
         <>
 
