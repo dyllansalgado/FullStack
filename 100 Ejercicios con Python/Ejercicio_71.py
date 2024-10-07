@@ -1,6 +1,6 @@
 # Crear una clase rectángulo con atributos: base y altura. La clase debe tener métodos que calculen el área y el perímetro del rectángulo.
 
-class rectangulo:
+class Rectangulo:
   # El método __init__ es el constructor de la clase.
   def __init__(self, base, altura):
     # Atributos de la clase
@@ -17,7 +17,7 @@ class rectangulo:
 
 #Se crea la instancia del objeto:
 
-rectangulo1 = rectangulo(5,4)
+rectangulo1 = Rectangulo(5,4)
 
 #Se llama el metodo area
 rectangulo1.area()

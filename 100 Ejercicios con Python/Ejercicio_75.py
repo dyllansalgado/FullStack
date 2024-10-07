@@ -1,6 +1,6 @@
 # Crear una clase vehículo con atributos: marca, modelo, matricula, km; con los métodos constructor, avanzar(km) que aumenta el valor de km en la respectiva cantidad.
 
-class vehiculo:
+class Vehiculo:
   # El método __init__ es el constructor de la clase.
   def __init__(self, marca, modelo, matricula, km):
     # Atributos de la clase
@@ -20,7 +20,7 @@ class vehiculo:
 
 #Se crea la instancia del objeto:
 km = int(input("Ingrese los km: "))
-vehiculoInstancia = vehiculo("Toyota", "Corolla", "1231BA", km)
+vehiculoInstancia = Vehiculo("Toyota", "Corolla", "1231BA", km)
 print(f"El vehiculo {vehiculoInstancia.marca} {vehiculoInstancia.modelo} comienza el recorrido")
 
 #Se llama el metodo que muestra el avance de los km correspondientes

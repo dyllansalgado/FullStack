@@ -1,6 +1,6 @@
 # Crear una clase persona con atributos: nombre, edad, identificación, con métodos constructor que retorne True si es mayor de edad.
 
-class persona:
+class Persona:
   # El método __init__ es el constructor de la clase.
   def __init__(self, nombre, edad, identificacion):
     # Atributos de la clase
@@ -17,7 +17,7 @@ class persona:
 
 #Se crea la instancia del objeto:
 edad = int(input("Ingrese la edad: "))
-personaInstancia = persona("Dyllan", edad, "12345678")
+personaInstancia = Persona("Dyllan", edad, "12345678")
 
 #Se llama el metodo que verifica si es mayor de edad
 personaInstancia.mayorDeEdad()
