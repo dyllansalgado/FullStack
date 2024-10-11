@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { UserForm } from "./components/UserForm"
 import { UsersList } from "./components/UsersList"
 import { usersReducer } from "./reducers/usersReducer";
@@ -14,6 +14,7 @@ const initialUsers = [
 ];
 
 const initialUsersForm = {
+    id: 0,
     username: '',
     password: '',
     email: '',
@@ -22,11 +23,18 @@ const initialUsersForm = {
 export const UsersApp = () => {
 
     const [users, dispatch] = useReducer(usersReducer, initialUsers);
+    const [userSelected, setUserSelected] = useState(initialUsersForm);
 
     const handlerAddUser = (user) => {
         //console.log(user)
+        let type;
+        if(user.id ===0){
+            type = 'addUser';
+        } else {
+            type = 'updateUser';
+        }
         dispatch({
-            type: 'addUser',
+            type,
             payload: user,
         })
     };
@@ -36,9 +44,12 @@ export const UsersApp = () => {
             type: 'removeUser',
             payload: id
         })
-
     }
 
+    const handlerUserSelectedForm = (user) => {
+        //console.log(user)
+        setUserSelected({...user});
+    }
     return (
         <div className="container my-4">
 
@@ -47,12 +58,14 @@ export const UsersApp = () => {
                 <div className="col">
                     <UserForm
                         initialUsersForm={initialUsersForm}
+                        userSelected = {userSelected}
                         handlerAddUser={handlerAddUser} />
                 </div>
                 <div className="col">
                     {users.length === 0
                         ? <div className="alert alert-warning"> No hay usuarios registrados en el sistema!</div>
                         : <UsersList users={users}
+                            handlerUserSelectedForm={handlerUserSelectedForm}
                             handlerRemoveUser={handlerRemoveUser} />}
                 </div>
             </div>
