@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 
-export const UserForm = ({ userSelected, handlerAddUser, initialUsersForm }) => {
+export const UserForm = ({ userSelected, handlerAddUser, initialUsersForm, handlerCloseForm }) => {
 
     const [userForm, setUserForm] = useState(initialUsersForm);
 
@@ -21,20 +22,28 @@ export const UserForm = ({ userSelected, handlerAddUser, initialUsersForm }) => 
                 [name]: value,
             }
         )
-    }
+    };
     const onSubmit = (event) => {
         event.preventDefault();
         if (!username || (!password && id === 0) || !email) {
-            alert('Debe completar el formulario');
+            Swal.fire({
+                title: "Error de validacion",
+                text: "Debe completar los campos del formulario",
+                icon: "error"
+            });
             return;
-        }
+        };
         console.log(userForm);
         handlerAddUser(userForm);
         //guardar el user form en el listado de usuarios
         setUserForm(initialUsersForm);
 
 
-    }
+    };
+    const onCloseForm = () => {
+        handlerCloseForm();
+        setUserForm(initialUsersForm);
+    };
     return (
         <form onSubmit={onSubmit}>
             <input
@@ -43,7 +52,7 @@ export const UserForm = ({ userSelected, handlerAddUser, initialUsersForm }) => 
                 name="username"
                 value={username}
                 onChange={onInputChange} />
-            { id > 0? '' :<input
+            {id > 0 ? '' : <input
                 className="form-control my-3 w-75"
                 placeholder="Password"
                 name="password"
@@ -63,7 +72,13 @@ export const UserForm = ({ userSelected, handlerAddUser, initialUsersForm }) => 
             <button
                 className="btn btn-primary"
                 type="submit">
-                { id > 0? 'Editar' : 'Crear'}
+                {id > 0 ? 'Editar' : 'Crear'}
+            </button>
+            <button
+                className="btn btn-primary mx-2"
+                type="button"
+                onClick={() => onCloseForm()}>
+                Cerrar
             </button>
         </form>
     )

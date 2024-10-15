@@ -8,9 +8,12 @@ export const UsersApp = () => {
         users,
         userSelected,
         initialUsersForm,
+        visibleForm,
         handlerAddUser,
         handlerRemoveUser,
-        handlerUserSelectedForm
+        handlerUserSelectedForm,
+        handlerOpenForm,
+        handlerCloseForm,
     } = useUsers();
 
     return (
@@ -18,13 +21,22 @@ export const UsersApp = () => {
 
             <h2>Users App</h2>
             <div className="row">
+                {!visibleForm ||
+                    <div className="col">
+                        <UserForm
+                            initialUsersForm={initialUsersForm}
+                            userSelected={userSelected}
+                            handlerAddUser={handlerAddUser}
+                            handlerCloseForm = {handlerCloseForm}
+                        />
+                    </div>}
                 <div className="col">
-                    <UserForm
-                        initialUsersForm={initialUsersForm}
-                        userSelected = {userSelected}
-                        handlerAddUser={handlerAddUser} />
-                </div>
-                <div className="col">
+                    {visibleForm ||
+                        <button className="btn btn-primary my-2"
+                        onClick={handlerOpenForm}>
+                            Nuevo Usuario
+                        </button>
+                    }
                     {users.length === 0
                         ? <div className="alert alert-warning"> No hay usuarios registrados en el sistema!</div>
                         : <UsersList users={users}
